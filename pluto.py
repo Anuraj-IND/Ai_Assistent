@@ -45,7 +45,7 @@ def takeCommand():
                 print(f"User said: {query}\n")  #finally got a backtik ka judwa bhai
             
             except Exception as e:
-                #print(e) this line will show error
+                #print(e) this line will show error ok
                 print("Repeat it again please.....")
                 return "none"       
             return query
