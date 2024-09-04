@@ -82,7 +82,9 @@ elif 'open excel' in query:
 elif 'open word art' in query:
     os.system("start wordart.exe")  # Open WordArt (Windows only)
 elif 'open notepad' in query:
-    os.system("start notepad")  # Open notepad
+    os.system("start notepad")   # Open notepad
+elif 'open chrome' in query:
+    os.system("start chrome")    
 elif 'open' in query:
     name = query.split(' ')[1]
     speak('Opening'+name)
@@ -119,3 +121,14 @@ elif 'play music' in query:
 elif "the time" in query:
     strTime = datetime.datetime.now().strftime("%H:%M:%S")#simply specify time in a format
     speak(f"The time is {strTime}")               
+elif 'browse' in query:
+    name=query.split(' ')
+    name.remove('browse')
+    c=''
+    for x in name:
+       c+=' '+x
+    speak('Showing results for '+c)
+    try:
+        webbrowser.open('https://www.google.com/search?q='+c)
+    except Exception as e:
+        speak("Sorry, I couldn't browse that.")

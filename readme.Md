@@ -8,6 +8,7 @@
     search youtube [content name]
     play music 
     the time
+    browse
 """    
 Its not really done yet have to do more things like :
   1. adding my spotify 
