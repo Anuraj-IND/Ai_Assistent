@@ -37,7 +37,7 @@ def takeCommand():
         with sr.Microphone() as source:  # system microphone use as src
             print("Listening...")
             r.pause_threshold = 2#self.pause_threshold isko bhi check krna h itll ignore noise
-            r.energy_threshold=1000
+            r.energy_threshold=2000
             audio = r.listen(source)
             try:
                 print("Recognizing...")
