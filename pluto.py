@@ -13,10 +13,10 @@ engine.setProperty('voice',voices[1])
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()#do more research about it
-# def conti():
-#     speak("I'm listening...")
-#     takeCommand()
-#     return query1
+def conti():
+    speak("I'm listening...")
+    takeCommand()
+
 def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<12:
@@ -31,6 +31,7 @@ def wishMe():
 def takeCommand():
    #while(query1=='listen'): 
     #takes comd and returns
+    speak("Listening")
     r = sr.Recognizer()  # recognizer is a class to understand voice commands
     languages = ['en-IN', 'hi-IN']  # add Hindi language support
     for language in languages:
@@ -51,84 +52,117 @@ def takeCommand():
             return query
 
 
-if __name__ == '__main__':   
-#  query1='listen'   
-#  query1=conti()
-# while (query1=='listen'):
-   wishMe()
-   query=takeCommand().lower()
+if __name__ == '__main__':
+  query1=''
+  query1=takeCommand()         
+  while (query1=='listen'):
+        wishMe()
+        query=takeCommand().lower()
+        #    query1=query
 
-  #logic to determine tasks that will be done by pluto
-  ####################wikipedia for just dictionary or term or word search################
-if 'wikipedia' in query:
-    speak('Searching Wikipedia...')
-    query = query.replace("wikipedia", "")
-    try:
-        results = wiki.summary(query, sentences=2)
-        speak("According to Wikipedia")
-        speak(results)
-        try:
-            print(results)
-        except Exception as e:
-            print("Unable to print the Wikipedia summary. Please try another topic.")
-    except Exception as e:
-        speak("Sorry, the Wikipedia page for that topic could not be found. Please try another topic.")
-elif 'open code' in query:
-    os.system("code .")  # Open Visual Studio Code
-elif 'open powerpoint' in query:
-    os.system("start powerpnt.exe")  # Open Microsoft PowerPoint (Windows only)
-elif 'open excel' in query:
-    os.system("start excel.exe")  # Open Microsoft Excel (Windows only)
-elif 'open word art' in query:
-    os.system("start wordart.exe")  # Open WordArt (Windows only)
-elif 'open notepad' in query:
-    os.system("start notepad")   # Open notepad
-elif 'open chrome' in query:
-    os.system("start chrome")    
-elif 'open' in query:
-    name = query.split(' ')[1]
-    speak('Opening'+name)
-    try:
-        webbrowser.open(name+'.com')
-    except Exception as e:
-        speak("Sorry, I couldn't open the website. Please try another one.")     
-elif 'search youtube' in query:
-    name=query.split(' ')
-    name.remove('search')
-    name.remove('youtube')
-    c=''
-    for x in name:
-       c+=' '+x
-    speak('Showing results for '+c)
-    try:
-        webbrowser.open('https://www.youtube.com/results?search_query='+c)
-    except Exception as e:
-        speak("Sorry, I couldn't play the music. Please try another one.")
-# elif 'play music' in query:
-#     music_name = query.split(' ')[2]
-#     speak('Playing '+music_name+' music...')
-#     try:
-#         sp = spotipy.Spotify(auth_token='your_token')
-#         song = sp.start_song(music_name)
-#     except Exception as e:
-#         speak("Sorry, I couldn't play the music. Please try another one.")
-# TO-DO: make a python code to get token from sportify each hour if previous token is expired. 
-elif 'play music' in query:
-       music_dir='D:\music'
-       songs=os.listdir(music_dir)
-       song = random.choice(songs)
-       os.startfile(os.path.join(music_dir, song))      
-elif "the time" in query:
-    strTime = datetime.datetime.now().strftime("%H:%M:%S")#simply specify time in a format
-    speak(f"The time is {strTime}")               
-elif 'browse' in query:
-    name=query.split(' ')
-    name.remove('browse')
-    c=''
-    for x in name:
-       c+=' '+x
-    speak('Showing results for '+c)
-    try:
-        webbrowser.open('https://www.google.com/search?q='+c)
-    except Exception as e:
-        speak("Sorry, I couldn't browse that.")
+        #logic to determine tasks that will be done by pluto
+        ####################wikipedia for just dictionary or term or word search################
+        if 'wikipedia' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")
+            try:
+                results = wiki.summary(query, sentences=2)
+                speak("According to Wikipedia")
+                speak(results)
+                try:
+                    print(results)
+                except Exception as e:
+                    print("Unable to print the Wikipedia summary. Please try another topic.")
+            except Exception as e:
+                speak("Sorry, the Wikipedia page for that topic could not be found. Please try another topic.")
+            speak("should I continue to assist you...?")
+            query1=takeCommand()         
+        elif 'open code' in query:
+            os.system("code .")  # Open Visual Studio Code
+            speak("should I continue to assist you...?")
+            query1=takeCommand()
+        elif 'open powerpoint' in query:
+            os.system("start powerpnt.exe")  # Open Microsoft PowerPoint (Windows only)
+            speak("should I continue to assist you...?")
+            query1=takeCommand()
+        elif 'open excel' in query:
+            os.system("start excel.exe")  # Open Microsoft Excel (Windows only)
+            speak("should I continue to assist you...?")
+            query1=takeCommand()
+        elif 'open word art' in query:
+            os.system("start wordart.exe")  # Open WordArt (Windows only)
+            speak("should I continue to assist you...?")
+            query1=takeCommand()
+        elif 'open notepad' in query:
+            os.system("start notepad")   # Open notepad
+            speak("should I continue to assist you...?")
+            query1=takeCommand()
+        elif 'open chrome' in query:
+            os.system("start chrome")    
+            speak("should I continue to assist you...?")
+            query1=takeCommand()
+        elif 'open' in query:
+            name = query.split(' ')[1]
+            speak('Opening'+name)
+            try:
+                webbrowser.open(name+'.com')
+            except Exception as e:
+                speak("Sorry, I couldn't open the website. Please try another one.")  
+            speak("should I continue to assist you...?")
+            query1=takeCommand()       
+        elif 'search youtube' in query:
+            name=query.split(' ')
+            name.remove('search')
+            name.remove('youtube')
+            c=''
+            for x in name:
+                c+=' '+x
+            speak('Showing results for '+c)
+            try:
+                    webbrowser.open('https://www.youtube.com/results?search_query='+c)
+            except Exception as e:
+                    speak("Sorry, I couldn't play the music. Please try another one.")
+            speak("should I continue to assist you...?")
+            query1=takeCommand()    
+        # elif 'play music' in query:
+        #     music_name = query.split(' ')[2]
+        #     speak('Playing '+music_name+' music...')
+        #     try:
+        #         sp = spotipy.Spotify(auth_token='your_token')
+        #         song = sp.start_song(music_name)
+        #     except Exception as e:
+        #         speak("Sorry, I couldn't play the music. Please try another one.")
+        # TO-DO: make a python code to get token from sportify each hour if previous token is expired. 
+        elif 'play music' in query:
+            music_dir='D:\music'
+            songs=os.listdir(music_dir)
+            song = random.choice(songs)
+            os.startfile(os.path.join(music_dir, song)) 
+            speak("should I continue to assist you...?")
+            query1=takeCommand()     
+        elif "the time" in query:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")#simply specify time in a format
+            speak(f"The time is {strTime}")        
+            speak("should I continue to assist you...?")
+            query1=takeCommand()       
+        elif 'browse' in query:
+            name=query.split(' ')
+            name.remove('browse')
+            c=''
+            for x in name:
+                c+=' '+x
+            speak('Showing results for '+c)
+            try:
+                    webbrowser.open('https://www.google.com/search?q='+c)
+            except Exception as e:
+                    speak("Sorry, I couldn't browse that.")
+            speak("should I continue to assist you...?")
+            query1=takeCommand()        
+        # elif query1!='listen':
+        #   while(query1!='listen'):
+        #     query1=takeCommand()        
+        # elif 'stop' in query1:
+        #     speak("I'm stopping the execution.")
+        #     while(query1!='listen'):
+        #        query1=takeCommand()
+            
