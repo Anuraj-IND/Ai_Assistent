@@ -6,6 +6,15 @@ import webbrowser
 import os
 import random
 #import spotipy have to explore it first
+import google.generativeai as genai
+"""
+Install the Google AI Python SDK
+
+$ pip install google-generativeai
+"""
+
+
+
 
 engine = pyttsx3.init("sapi5")#to take win voice we use sapi5 api
 voices = engine.getProperty('voices')#get a list of voices
@@ -50,6 +59,28 @@ def takeCommand():
                 print("Repeat it again please.....")
                 return "none"       
             return query
+genai.configure(api_key="AIzaSyCLsPsGglWd2dmFIL9_P2VIfI9mnrFe50Y")
+
+# Create the model
+generation_config = {
+  "temperature": 1,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_output_tokens": 8192,
+  "response_mime_type": "text/plain",
+}
+
+model = genai.GenerativeModel(
+  model_name="gemini-1.5-flash",
+  generation_config=generation_config,
+  # safety_settings = Adjust safety settings
+  # See https://ai.google.dev/gemini-api/docs/safety-settings
+)
+
+chat_session = model.start_chat(
+  history=[
+  ]
+)
 
 
 if __name__ == '__main__':
@@ -164,5 +195,7 @@ if __name__ == '__main__':
         # elif 'stop' in query1:
         #     speak("I'm stopping the execution.")
         #     while(query1!='listen'):
-        #        query1=takeCommand()
-            
+        #        query1=takeCommand()        
+        else :
+            response = chat_session.send_message(query)
+            speak(response.text)
